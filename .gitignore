@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# Docker
+.dockerignore
+# If you build images, you might want to ignore context folders
+# for specific services if they are large
+
+# Data
+data/*.csv
+data/*.json
+data/*.parquet
+# Or more specifically:
+# data/bronze/*
+# data/silver/*
+# data/gold/*
+
+# Databases
+*.db # DuckDB database files
+
+# Environment variables
+.env
