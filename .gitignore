@@ -25,3 +25,4 @@ data/*.parquet
 # Environment variables
 .env
 *.csv.gz
+*.csv.gz
