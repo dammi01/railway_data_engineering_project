@@ -1,0 +1,8 @@
+pandas==2.2.3
+duckdb==1.3.0
+deltalake==0.25.5
+requests
+# Futuras libs como:
+# dbt-duckdb
+# apache-airflow
+# ...

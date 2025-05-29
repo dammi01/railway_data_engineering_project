@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # Serviço para o nosso ambiente de desenvolvimento Python
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Monta o diretório do projeto local dentro do contêiner
+    volumes:
+      - .:/app
+    # Mapeia portas se necessário (ex: para Streamlit ou Airflow UI)
+    # ports:
+    #   - "8501:8501" # Exemplo para Streamlit
+    environment:
+      # Variáveis de ambiente que seu app Python pode precisar
+      PYTHONUNBUFFERED: 1 # Garante que logs do Python apareçam em tempo real
+    # Entra no shell do contêiner para desenvolvimento interativo
+    stdin_open: true # Manter stdin aberto para interatividade
+    tty: true        # Aloca um pseudo-TTY
+
+  # Serviço para o DuckDB (opcionalmente como um contêiner separado para alguns cenários,
+  # mas para o nosso uso local, o DuckDB rodará EMBUTIDO no contêiner 'app'.)
+  # Manter este serviço é útil se você quiser ter um "servidor" DuckDB (com a extensão MotherDuck, por exemplo)
+  # ou se você decidir ter um Postgres/Outro DB separado.
+  # Por enquanto, o DuckDB que usaremos será o que está dentro do contêiner 'app'.
+  # Poderíamos remover isso para simplificar, mas manter para fins didáticos de como seria outro serviço.
+  duckdb_server: # Nome simbólico, pode ser removido se DuckDB for apenas embedded.
+    image: duckdb/duckdb # Exemplo de imagem, não usaremos como servidor local para o projeto.
+    # Você não precisa desta parte por enquanto, pois o DuckDB será usado embutido no Python.
+    # Se fosse um servidor, poderia ter:
+    # command: duckdb --host 0.0.0.0 --port 5432
+    # ports:
+    #   - "5432:5432"
+    # volumes:
+    #   - ./data/duckdb_storage:/data # Para persistir dados do servidor DuckDB
+    restart: "no" # Não reinicie automaticamente se for apenas um exemplo
